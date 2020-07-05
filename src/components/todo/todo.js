@@ -65,9 +65,15 @@ function ToDo(props) {
         assignee: 'Person B',
       },
     ];
-
+    document.title = `To Do List: ${
+      list.filter((item) => !item.complete).length
+    }`;
     setList(list);
   }, []);
+
+  document.title = `To Do List:  ${
+    list.filter((item) => !item.complete).length
+  }`;
 
   return (
     <>
@@ -76,6 +82,7 @@ function ToDo(props) {
           <Navbar.Brand>HOME</Navbar.Brand>
         </Navbar>
       </header>
+
       <Navbar variant="dark" bg="dark" className="mt-4 ml-5 mr-5">
         <Navbar.Brand>
           There are {list.filter((item) => !item.complete).length} Items To
