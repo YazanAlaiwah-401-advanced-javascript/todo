@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 /* eslint-disable array-callback-return */
 import React, { useState, useContext } from 'react';
 
