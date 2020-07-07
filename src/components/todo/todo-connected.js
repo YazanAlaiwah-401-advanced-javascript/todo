@@ -1,19 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import TodoForm from './form.js';
 import TodoList from './list.js';
 import Navbar from 'react-bootstrap/Navbar';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import useAjax from '../../hooks/ajax.js';
+import Button from 'react-bootstrap/Button';
+
 import './todo.scss';
+import useAjax from '../../hooks/ajax.js';
+
+// import React, { useContext } from 'react';
+import { SettingsContext } from '../../context/settings.js';
+import { ThemeContext } from '../../context/theme.js';
 
 function ToDo(props) {
+  var slicedList;
+  const siteContext = useContext(SettingsContext);
+  const themeContext = useContext(ThemeContext);
+
   const [list, setList] = useState([]);
   const [getElement, postElement, putElement, deleteElement] = useAjax(setList);
 
   const addItem = (item) => {
     item.complete = false;
-    let url = `https://lab-32.herokuapp.com/todo`;
+    let url = `https://lab32-401.herokuapp.com/todo`;
     postElement(url, item);
   };
 
@@ -26,9 +34,8 @@ function ToDo(props) {
         listItem._id === item._id ? item : listItem
       );
       setList([...z]);
-
       let data = item;
-      let url = `https://lab-32.herokuapp.com/todo`;
+      let url = `https://lab32-401.herokuapp.com/todo`;
 
       putElement(url, data);
     }
@@ -39,9 +46,14 @@ function ToDo(props) {
       list.filter((item) => !item.complete).length
     }`;
   }, [list]);
-
   useEffect(() => {
-    getElement('https://lab-32.herokuapp.com/todo');
+    let url = `https://lab32-401.herokuapp.com/todo`;
+    getElement(url);
+
+    // setTimeout(() => {
+
+    //   ss();
+    // }, 5000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [list]);
 
@@ -49,7 +61,8 @@ function ToDo(props) {
     let idx = list.findIndex((i) => i._id === id);
     list.splice(idx, 1);
     setList([...list]);
-    let url = `https://lab-32.herokuapp.com/todo`;
+    let url = `https://lab32-401.herokuapp.com/todo`;
+
     deleteElement(url, id);
   };
 
@@ -66,23 +79,48 @@ function ToDo(props) {
           Complete
         </Navbar.Brand>
       </Navbar>
-      <Container className="ml-5 mr-5 mt-5">
-        <Row className="ml-5">
-          <div>
-            <TodoForm handleSubmit={addItem} />
-          </div>
-          ​
-          <div>
-            <TodoList
-              list={list}
-              handleComplete={toggleComplete}
-              handleDelete={togglehandleDelete}
-            />
-          </div>
-        </Row>
-      </Container>
+      ​
+      <div style={{ textAlign: 'end' }}>
+        <Button
+          style={{}}
+          variant="primary"
+          onClick={(e) => siteContext.setShow(!siteContext.show)}
+        >
+          Hide Completed
+        </Button>
+        <form onChange={(e) => siteContext.changeSort(e.target.value)}>
+          <label class="radio">
+            <input type="radio" name="sort" value="difficulty" />
+            difficulty
+          </label>
+          <label class="radio">
+            <input type="radio" name="sort" value="complete" />
+            complete
+          </label>
+          <label class="radio">
+            <input type="radio" name="sort" value="assignee" />
+            assignee
+          </label>
+          <label class="radio">
+            <input type="radio" name="sort" value="none" />
+            none
+          </label>
+        </form>
+      </div>
+      <section className="todo">
+        <div>
+          <TodoForm handleSubmit={addItem} />
+        </div>
+        ​
+        <div>
+          <TodoList
+            list={list}
+            handleComplete={toggleComplete}
+            handleDelete={togglehandleDelete}
+          />
+        </div>
+      </section>
     </main>
   );
 }
-
 export default ToDo;
