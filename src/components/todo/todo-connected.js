@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 import React, { useState, useEffect, useContext } from 'react';
 import TodoForm from './form.js';
 import TodoList from './list.js';
@@ -9,12 +10,12 @@ import useAjax from '../../hooks/ajax.js';
 
 // import React, { useContext } from 'react';
 import { SettingsContext } from '../../context/settings.js';
-import { ThemeContext } from '../../context/theme.js';
+// import { ThemeContext } from '../../context/theme.js';
 
 function ToDo(props) {
-  var slicedList;
+  // var slicedList;
   const siteContext = useContext(SettingsContext);
-  const themeContext = useContext(ThemeContext);
+  // const themeContext = useContext(ThemeContext);
 
   const [list, setList] = useState([]);
   const [getElement, postElement, putElement, deleteElement] = useAjax(setList);
