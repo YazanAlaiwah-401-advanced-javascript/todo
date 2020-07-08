@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 import React from 'react';
 import { SettingsContext } from '../context/data.js';
 import Show from '../show/index.js';

@@ -95,19 +95,19 @@ function ToDo(props) {
             Hide Completed
           </Button>
           <form onChange={(e) => siteContext.changeSort(e.target.value)}>
-            <label class="radio">
+            <label className="radio">
               <input type="radio" name="sort" value="difficulty" />
               difficulty
             </label>
-            <label class="radio">
+            <label className="radio">
               <input type="radio" name="sort" value="complete" />
               complete
             </label>
-            <label class="radio">
+            <label className="radio">
               <input type="radio" name="sort" value="assignee" />
               assignee
             </label>
-            <label class="radio">
+            <label className="radio">
               <input type="radio" name="sort" value="none" />
               none
             </label>

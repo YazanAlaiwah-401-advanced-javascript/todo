@@ -1,3 +1,5 @@
+/* eslint-disable comma-dangle */
+/* eslint-disable no-useless-constructor */
 import React from 'react';
 import { SettingsContext } from '../context/data.js';
 import Show from '../show/index';
