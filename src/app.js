@@ -1,5 +1,5 @@
 import React from 'react';
-import SettingsContext from './context/settings.js';
+import SettingsContext from './context/data.js';
 
 import ToDo from './components/todo/todo-connected.js';
 

@@ -1,12 +1,12 @@
 /* eslint-disable comma-dangle */
 /* eslint-disable array-callback-return */
 import React, { useState, useContext } from 'react';
-
+import Auth from '../../auth/index.js';
 import { Card } from 'react-bootstrap';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './todo.scss';
-import { SettingsContext } from '../../context/settings.js';
+import { SettingsContext } from '../../context/data.js';
 var arr;
 
 function TodoList(props) {
@@ -56,19 +56,30 @@ function TodoList(props) {
           .map((item) => (
             <li key={item._id}>
               <Card style={{ width: '18rem', padding: '5px' }}>
-                <p
-                  onClick={() => props.handleDelete(item._id)}
-                  className="btnDelete"
-                >
-                  X
-                </p>
-                <Card.Title className="card-title">
+                <Auth capability="delete">
                   <p
-                    className={`status status-${item.complete.toString()}`}
-                    onClick={() => props.handleComplete(item._id)}
+                    onClick={() => props.handleDelete(item._id)}
+                    className="btnDelete"
                   >
-                    {`${item.complete ? 'complete' : 'pending'}`}
+                    X
                   </p>
+                </Auth>
+                <Card.Title className="card-title">
+                  <Auth capability="read">
+                    <p
+                      className={`status status-${item.complete.toString()}`}
+                      onClick={() => {
+                        if (siteContext.user.capabilities.includes('update')) {
+                          props.handleComplete(item._id);
+                        } else {
+                          return null;
+                        }
+                      }}
+                    >
+                      {`${item.complete ? 'complete' : 'pending'}`}
+                    </p>
+                  </Auth>
+
                   {item.assignee}
                 </Card.Title>
                 <Card.Body>
